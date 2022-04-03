@@ -3,9 +3,6 @@ from urllib.parse import urlparse
 from dotenv import load_dotenv
 import os
 
-load_dotenv()
-TOKEN = os.getenv("TOKEN")
-
 def shorten_link(token, url):
     request_url = 'https://api-ssl.bitly.com/v4/bitlinks'
     requests_headers = {'Authorization': f'Bearer {token}'}

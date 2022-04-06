@@ -1,3 +1,4 @@
+import argparse
 import os
 from urllib.parse import urlparse
 
@@ -24,11 +25,18 @@ def is_bitlink(requests_headers, bitlink):
     response = requests.get(check_url.format(bitlink), headers=requests_headers)
     return response.ok
 
+def createParser():
+    parser = argparse.ArgumentParser(description='Работа с API сервиса Bitly по сокращению ссылок')
+    parser.add_argument('url', help='Ваш Url в формате https://example.com/example_path')
+    return parser
+
 def main():
+    parser = createParser()
+    namespace = parser.parse_args()
+    url = namespace.url 
     load_dotenv()
     bitly_token = os.getenv("BITLY_TOKEN")
     requests_headers = {'Authorization': f'Bearer {bitly_token}'}
-    url = input('Введите ссылку: ')
     try:
         response = requests.get(url)
         response.raise_for_status()
